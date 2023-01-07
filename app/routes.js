@@ -1,11 +1,8 @@
+const healthController = require("../controllers/healthController");
 const router = require("express").Router();
 
 router.use(require("../routes/generalRoute"));
-
-router.get("/health", (_req, res, _next) => {
-  res.status(200).json({
-    message: "Server health is ok!",
-  });
-});
+router.use("/auth", require("../routes/authentication"));
+router.get("/health", healthController);
 
 module.exports = router;
