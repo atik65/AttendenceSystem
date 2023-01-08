@@ -1,8 +1,8 @@
-const healthController = require("../controllers/healthController");
 const router = require("express").Router();
+const generalRoute = require("../routes/generalRoute");
+const authRoute = require("../routes/authentication");
 
-router.use(require("../routes/generalRoute"));
-router.use("/auth", require("../routes/authentication"));
-router.get("/health", healthController);
+router.use(generalRoute);
+router.use("/api/v1/auth", authRoute);
 
 module.exports = router;

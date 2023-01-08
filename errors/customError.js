@@ -1,4 +1,4 @@
-const generateError = (statusCode, message) => {
+const generateError = (statusCode = 500, message = "Something went wrong.") => {
   const error = new Error(message);
   error.status = statusCode;
 
