@@ -15,7 +15,10 @@ const userSchema = new Schema({
     required: true,
   },
   roles: [String],
-  accountStatus: String,
+  accountStatus: {
+    type: String,
+    default: "PENDING",
+  },
 });
 
 const User = model("User", userSchema);

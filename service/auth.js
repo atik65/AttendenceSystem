@@ -1,13 +1,19 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const generateError = require("../errors/customError");
+const error = require("../errors/customError");
 const { findUserByProperty, createNewUser } = require("./user");
 
-const registerService = async ({ name, email, password }) => {
+const registerService = async ({
+  name,
+  email,
+  password,
+  roles,
+  accountStatus,
+}) => {
   let user = await findUserByProperty("email", email);
 
   if (user) {
-    throw generateError(400, "User already exist.");
+    throw error(400, "User already exist.");
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -19,8 +25,8 @@ const registerService = async ({ name, email, password }) => {
     name,
     email,
     password,
-    roles: ["STUDENT"],
-    accountStatus: "PENDING",
+    roles,
+    accountStatus,
   });
 
   return user;
@@ -30,13 +36,13 @@ const loginService = async ({ email, password }) => {
   const user = await findUserByProperty("email", email);
 
   if (!user) {
-    throw generateError(400, "Invalid Credentials.");
+    throw error(400, "Invalid Credentials.");
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw generateError(400, "Invalid credentials.");
+    throw error(400, "Invalid credentials.");
   }
   const payload = {
     id: user._id,

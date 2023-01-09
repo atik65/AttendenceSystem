@@ -1,4 +1,4 @@
-const generateError = require("../errors/customError");
+const error = require("../errors/customError");
 const { registerService, loginService } = require("../service/auth");
 
 const registrationController = async (req, res, next) => {
@@ -6,7 +6,7 @@ const registrationController = async (req, res, next) => {
 
   // validation
   if (!name || !email || !password) {
-    return next(generateError(400, "Invalid Data."));
+    return next(error(400, "Invalid Data."));
   }
 
   try {
@@ -25,7 +25,7 @@ const loginController = async (req, res, next) => {
 
   //validation
   if (!email || !password) {
-    return next(generateError(400, "Invalid Credentials."));
+    return next(error(400, "Invalid Credentials."));
   }
 
   try {

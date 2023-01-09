@@ -1,8 +1,8 @@
-const generateError = (statusCode = 500, message = "Something went wrong.") => {
-  const error = new Error(message);
-  error.status = statusCode;
+const error = (statusCode = 500, message = "Something went wrong.") => {
+  const customError = new Error(message);
+  customError.status = statusCode;
 
-  return error;
+  return customError;
 };
 
-module.exports = generateError;
+module.exports = error;
