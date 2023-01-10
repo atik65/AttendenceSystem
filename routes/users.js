@@ -14,20 +14,20 @@ router.get("/:userId", userController.getUserById);
 /**
  * update users by userId or email
  * @route api/v1/users/id
- * @method PUT
- * @visibility private
- */
-
-router.put("/:userId", userController.putUserById);
-
-/**
- * update users by userId or email
- * @route api/v1/users/id
  * @method PATCH
  * @visibility private
  */
 
 router.patch("/:userId", userController.patchUserById);
+
+/**
+ * update users by userId or email
+ * @route api/v1/users/id
+ * @method PUT
+ * @visibility private
+ */
+
+router.put("/:userId", userController.putUserById);
 
 /**
  * delete users by userId or email

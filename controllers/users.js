@@ -50,7 +50,32 @@ const getUserById = async (req, res, next) => {
 
 const putUserById = (req, res, next) => {};
 
-const patchUserById = (req, res, next) => {};
+const patchUserById = async (req, res, next) => {
+  const { userId } = req.params;
+
+  const { name, roles, accountStatus } = req.body;
+
+  try {
+    const user = await findUserByProperty("_id", userId);
+
+    if (!user) {
+      throw error(404, "User not found");
+    }
+
+    user.name = name ? name : user.name;
+    user.roles = roles ? roles : user.roles;
+    user.accountStatus = accountStatus ? accountStatus : user.accountStatus;
+
+    await user.save();
+
+    return res.status(200).json({
+      message: "User updated successfully.",
+      user,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 const deleteUserById = async (req, res, next) => {
   const { userId } = req.params;
