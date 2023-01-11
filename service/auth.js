@@ -52,7 +52,7 @@ const loginService = async ({ email, password }) => {
     accountStatus: user.accountStatus,
   };
 
-  const token = jwt.sign(payload, "secret-key", { expiresIn: "2h" });
+  const token = jwt.sign(payload, "secret-key", { expiresIn: "365d" });
   return token;
 };
 

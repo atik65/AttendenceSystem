@@ -1,10 +1,23 @@
 const { Schema, model } = require("mongoose");
 
-const adminAttendanceSchema = new Schema({
-  status: String,
-  timeLimit: Number,
-  createdAt: Date,
-});
+const adminAttendanceSchema = new Schema(
+  {
+    status: {
+      type: String,
+      required: true,
+      enum: ["RUNNING", "COMPLETED"],
+      default: "RUNNING",
+    },
+    timeLimit: {
+      type: Number,
+      required: true,
+      max: 30,
+      min: 5,
+      default: 5,
+    },
+  },
+  { timestamps: true }
+);
 
 const AdminAttendance = model("AdminAttendance", adminAttendanceSchema);
 

@@ -1,6 +1,10 @@
 const error = require("../errors/customError");
 const { registerService } = require("../service/auth");
-const { findUsers, findUserByProperty } = require("../service/user");
+const {
+  findUsers,
+  findUserByProperty,
+  updateUser,
+} = require("../service/user");
 
 const postUser = async (req, res, next) => {
   const { name, email, password, roles, accountStatus } = req.body;
@@ -48,7 +52,29 @@ const getUserById = async (req, res, next) => {
   }
 };
 
-const putUserById = (req, res, next) => {};
+const putUserById = async (req, res, next) => {
+  const { userId } = req.params;
+  const { name, roles, email, accountStatus } = req.body;
+
+  try {
+    const user = await updateUser(userId, {
+      name,
+      roles,
+      email,
+      accountStatus,
+    });
+    if (!user) {
+      throw error(404, "No user found.");
+    }
+
+    return res.status(200).json({
+      message: "User updated successfully.",
+      user,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 const patchUserById = async (req, res, next) => {
   const { userId } = req.params;
